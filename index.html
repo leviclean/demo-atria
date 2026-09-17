@@ -913,9 +913,9 @@ nav button i{transition:transform .23s cubic-bezier(.2,.8,.2,1)}nav button:hover
   "use strict";
   var CONFIG="kaptar-config",LAST="clean-leads-last-greeting",currentPeriod="";
   var messages={
-    morning:["Bom dia, {name}. Vamos começar forte.","Bom dia, {name}. O próximo cliente começa agora.","Bom dia, {name}. Vamos colocar a operação em movimento.","Bom dia, {name}. Hoje é dia de avançar."],
-    afternoon:["Boa tarde, {name}. Vamos pra cima.","Boa tarde, {name}. Ainda dá tempo de fechar mais uma.","Boa tarde, {name}. Vamos transformar busca em venda.","Boa tarde, {name}. O próximo sim pode chegar hoje."],
-    night:["Boa noite, {name}. Vamos encerrar o dia avançando.","Boa noite, {name}. Consistência hoje, resultado amanhã.","Boa noite, {name}. Mais uma oportunidade antes de fechar.","Boa noite, {name}. Cada contato deixa você mais perto."]
+    morning:["Bom dia, {name}. Vamos começar forte.","Bom dia, {name}. O próximo cliente começa agora.","Bom dia, {name}. Vamos colocar a operação em movimento.","Bom dia, {name}. Hoje é dia de avançar.","Bom dia, {name}. Uma boa conversa pode mudar o seu dia.","Bom dia, {name}. O resultado começa na primeira ação.","Bom dia, {name}. Sua próxima oportunidade já está esperando.","Bom dia, {name}. Constância transforma contatos em clientes."],
+    afternoon:["Boa tarde, {name}. Vamos pra cima.","Boa tarde, {name}. Ainda dá tempo de fechar mais uma.","Boa tarde, {name}. Vamos transformar busca em venda.","Boa tarde, {name}. O próximo sim pode chegar hoje.","Boa tarde, {name}. Cada novo lead é uma porta aberta.","Boa tarde, {name}. Mantenha o ritmo e confie no processo.","Boa tarde, {name}. A próxima venda começa com uma iniciativa."],
+    night:["Boa noite, {name}. Vamos encerrar o dia avançando.","Boa noite, {name}. Consistência hoje, resultado amanhã.","Boa noite, {name}. Mais uma oportunidade antes de fechar.","Boa noite, {name}. Cada contato deixa você mais perto.","Boa noite, {name}. Todo avanço de hoje fortalece o amanhã.","Boa noite, {name}. Grandes resultados nascem da constância.","Boa noite, {name}. Termine o dia mais perto do seu objetivo."]
   };
   function readConfig(){try{return JSON.parse(localStorage.getItem(CONFIG)||"{}")||{}}catch(_){return {}}}
   function period(){var hour=new Date().getHours();return hour<12?"morning":hour<18?"afternoon":"night"}
@@ -942,5 +942,12 @@ nav button i{transition:transform .23s cubic-bezier(.2,.8,.2,1)}nav button:hover
 #dashboard .dashboard-welcome{grid-column:1!important;max-width:620px!important}
 #dashboard .dashboard-ref-head{grid-column:2!important}
 @media(max-width:900px){#dashboard .dashboard-compact-head{grid-template-columns:minmax(0,1fr) auto!important}#dashboard .dashboard-welcome{grid-column:1!important;max-width:none!important}#dashboard .dashboard-ref-head{grid-column:2!important}}
+</style>
+<style id="clean-lead-panel-no-scroll">
+body:has(.lead-click-panel.open){overflow:hidden!important}
+.lead-click-panel{overflow:hidden!important}
+.lead-click-panel .lead-click-sheet{overflow:hidden!important;overscroll-behavior:none!important;scrollbar-width:none!important}
+.lead-click-panel .lead-click-sheet::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
+@media(max-width:680px){.lead-click-panel{padding:10px!important}.lead-click-panel .lead-click-sheet{max-height:calc(100svh - 20px)!important;padding:17px 15px!important}.lead-click-panel .lead-click-sheet h2{margin-top:5px!important;margin-bottom:3px!important}.lead-click-panel .lead-click-address{margin-bottom:12px!important}.lead-click-panel .lead-click-info{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}.lead-click-panel .lead-click-info>div{padding:9px 7px!important}.lead-click-panel .lead-click-info label{font-size:7px!important}.lead-click-panel .lead-click-info b{font-size:9px!important}.lead-click-panel .lead-click-message{margin-top:12px!important}.lead-click-panel .lead-click-message p{padding:10px!important;font-size:11px!important;line-height:1.35!important}.lead-click-panel .lead-click-buttons{display:grid!important;grid-template-columns:1fr 1fr!important;gap:7px!important;margin-top:12px!important}.lead-click-panel .lead-click-buttons a,.lead-click-panel .lead-click-buttons button{justify-content:center!important;margin:0!important;padding:10px 8px!important;font-size:9px!important}}
 </style></body>
 </html>

@@ -2,7 +2,15 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#080a0e">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CLEAN Leads">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="./icon-192.svg">
+  <link rel="apple-touch-icon" href="./icon-192.svg">
   <title>CLEAN Leads — Inteligência comercial</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -166,17 +174,136 @@ body:has(.lead-click-panel.open){overflow:hidden!important} .lead-click-panel{ov
 /* loader shell */
 .lead-loader{display:none;position:fixed;inset:0;z-index:99999}
 .lead-loader.show{display:grid}
+
+/* CLEAN Leads mobile app — desktop intentionally untouched */
+.clean-pwa-install{display:none}
+@media(max-width:680px){
+  html{background:#080a0e;scrollbar-width:none}
+  html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
+  body{min-height:100dvh;padding-top:env(safe-area-inset-top);overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;touch-action:pan-y;background:var(--bg)}
+  body:after{opacity:.16;background-size:28px 28px}
+  .app{display:block;min-height:100dvh}
+  main{margin-left:0!important;width:100%!important;max-width:none!important;padding:14px 14px calc(104px + env(safe-area-inset-bottom))!important}
+  .topbar{display:none!important}
+  .view{padding-top:0!important;animation:cleanMobileViewIn .36s cubic-bezier(.2,.8,.2,1)}
+  @keyframes cleanMobileViewIn{from{opacity:0;transform:translateY(10px) scale(.992)}to{opacity:1;transform:none}}
+
+  .rail{position:fixed!important;z-index:1000!important;left:10px!important;right:10px!important;bottom:calc(9px + env(safe-area-inset-bottom))!important;top:auto!important;width:auto!important;height:67px!important;min-height:67px!important;padding:6px!important;display:flex!important;flex-direction:row!important;align-items:center!important;border:1px solid color-mix(in srgb,var(--accent) 28%,rgba(255,255,255,.09))!important;border-radius:22px!important;background:rgba(12,15,21,.86)!important;box-shadow:0 18px 48px rgba(0,0,0,.58),inset 0 1px 0 rgba(255,255,255,.09)!important;backdrop-filter:blur(22px) saturate(150%)!important;-webkit-backdrop-filter:blur(22px) saturate(150%)!important;overflow:visible!important}
+  .rail:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,rgba(255,255,255,.08),transparent 27%,color-mix(in srgb,var(--accent) 9%,transparent) 75%,transparent)}
+  .rail .mark{display:none!important}
+  .nav{position:relative;z-index:1;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:3px!important;width:100%!important;height:100%!important;margin:0!important}
+  .nav button{width:100%!important;height:55px!important;min-width:0!important;padding:6px 2px 5px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;border:0!important;border-radius:16px!important;background:transparent!important;color:#7f8998!important;box-shadow:none!important;font-size:17px!important}
+  .nav button i{height:20px;display:grid;place-items:center;transition:transform .28s cubic-bezier(.2,.8,.2,1),color .22s ease,filter .22s ease}
+  .nav button span{display:block!important;position:static!important;transform:none!important;padding:0!important;border:0!important;background:transparent!important;opacity:1!important;color:inherit!important;font-size:0!important;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+  .nav button span:after{content:attr(data-mobile-label);font:700 8px/1 Manrope,Arial,sans-serif!important}
+  .nav button.active{background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 88%,white 12%),color-mix(in srgb,var(--accent) 72%,black 28%))!important;color:#fff!important;box-shadow:0 7px 18px color-mix(in srgb,var(--accent) 34%,transparent),inset 0 1px 0 rgba(255,255,255,.4)!important}
+  .nav button.active i{transform:translateY(-1px) scale(1.06);filter:drop-shadow(0 2px 7px rgba(0,0,0,.25))!important}
+  .nav button:active{transform:scale(.91)!important;transition-duration:.08s!important}
+  .rail-bottom{display:block!important;position:fixed!important;z-index:1010!important;right:13px!important;bottom:calc(88px + env(safe-area-inset-bottom))!important;margin:0!important}
+  .rail-bottom .btn{width:42px!important;height:42px!important;padding:0!important;display:grid!important;place-items:center!important;border-radius:14px!important;background:rgba(13,17,23,.92)!important;border:1px solid var(--accent-line)!important;color:var(--accent)!important;box-shadow:0 10px 28px rgba(0,0,0,.4)!important;backdrop-filter:blur(16px)!important}
+  .rail-bottom .btn i{margin:0!important}
+
+  .title-row{margin:4px 0 15px!important;align-items:flex-start!important}
+  .title-row h1{font-size:25px!important;line-height:1.08!important;letter-spacing:-1px!important}
+  .title-row .sub{font-size:12px!important;line-height:1.45!important}
+  .eyebrow{font-size:9px!important;letter-spacing:.12em!important}
+  .card,.metric,.hero,.finder-shell,.revenue,.ai-box,.sales-room,.finance-live{border-radius:20px!important}
+  .card,.metric{box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 12px 30px rgba(0,0,0,.16)}
+  .metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+  .metric{min-width:0;padding:14px!important}
+  .metric strong{font-size:20px!important;overflow-wrap:anywhere}
+  .hero{padding:21px 18px!important;min-height:190px!important}
+  .amount{font-size:38px!important;letter-spacing:-2px!important}
+  .split,.finance-grid,#dashboard .dashboard-bottom-grid{grid-template-columns:1fr!important;gap:12px!important}
+
+  .finder{width:100%!important}
+  .finder-shell{padding:19px 15px 17px!important;overflow:hidden!important}
+  .finder h1{font-size:25px!important;line-height:1.05!important;letter-spacing:-1px!important}
+  .finder-shell .query{height:auto!important;min-height:58px!important;margin:17px 0 0!important;padding:8px 9px 8px 13px!important;border-radius:17px!important;display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;align-items:center!important;gap:9px!important}
+  .finder-shell .query input{font-size:13px!important;min-width:0!important}
+  .finder-shell .query #searchVolume{display:none!important}
+  .finder-shell .query .btn{width:43px!important;height:43px!important;padding:0!important;border-radius:13px!important;display:grid!important;place-items:center!important;font-size:0!important}
+  .finder-shell .query .btn i{font-size:14px!important;margin:0!important}
+  .finder-shell .query .btn:before{content:"\f002";font:900 14px/1 "Font Awesome 6 Free"}
+  .result-head{align-items:flex-start!important;gap:10px!important}
+  .lead-cards{grid-template-columns:1fr!important;gap:10px!important}
+  .lead-card{padding:16px!important;border-radius:18px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 11px 28px rgba(0,0,0,.2)}
+  .lead-card h3{font-size:15px!important;margin-top:5px!important}
+  .lead-card p{font-size:11px!important;line-height:1.45!important}
+  .lead-card button{min-height:42px!important;border-radius:12px!important;font-size:11px!important}
+
+  .leads-table{overflow:visible!important}
+  .leads-table table,.leads-table tbody,.leads-table tr,.leads-table td{display:block!important;width:100%!important;min-width:0!important}
+  .leads-table thead{display:none!important}
+  .leads-table tbody{display:grid!important;gap:10px!important}
+  .leads-table tr{position:relative!important;padding:15px 46px 15px 15px!important;border:1px solid var(--line)!important;border-radius:18px!important;background:linear-gradient(145deg,rgba(22,28,38,.96),rgba(10,13,19,.96))!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 10px 26px rgba(0,0,0,.17)!important}
+  .leads-table td{border:0!important;padding:3px 0!important;font-size:11px!important}
+  .leads-table td:first-child{font-size:14px!important;margin-bottom:5px!important}
+  .leads-table td:last-child{position:absolute!important;right:13px!important;top:50%!important;transform:translateY(-50%)!important;width:auto!important}
+  .leads-table .row-action{width:34px!important;height:34px!important;border-radius:11px!important;background:var(--accent-soft)!important;color:var(--accent)!important}
+
+  .kanban{display:flex!important;gap:11px!important;overflow-x:auto!important;scroll-snap-type:x mandatory!important;margin-right:-14px!important;padding:2px 14px 10px 0!important;scrollbar-width:none!important}
+  .kanban::-webkit-scrollbar{display:none!important}
+  .column{flex:0 0 86vw!important;max-width:360px!important;min-height:420px!important;scroll-snap-align:start!important;border-radius:19px!important}
+  .deal{padding:14px!important;border-radius:14px!important}
+
+  #finance .finance-stage{width:calc(100% + 28px)!important;margin-left:-14px!important;border-radius:0!important;border-left:0!important;border-right:0!important}
+  #finance .finance-stage-head{padding-left:18px!important;padding-right:18px!important}
+  #finance .sales-room{border-radius:0!important;border-left:0!important;border-right:0!important;padding:19px 15px!important}
+  #finance .finance-actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;padding:0 14px!important}
+  #finance .finance-actions .btn{width:100%!important;min-height:46px!important;padding:10px 8px!important;font-size:10px!important}
+  #finance .sales-chart{min-width:620px}
+  #finance .sales-chart-wrap{overflow-x:auto!important;scrollbar-width:none!important}
+  #finance .sales-chart-wrap::-webkit-scrollbar{display:none!important}
+
+  .settings-layout{grid-template-columns:1fr!important;gap:10px!important}
+  .settings-card{padding:17px!important;border-radius:19px!important}
+  .settings-local-actions{display:grid!important;grid-template-columns:1fr 1fr!important}
+  .palette{display:none!important}
+
+  .clean-modal{z-index:1400!important;align-items:flex-end!important;padding:0!important}
+  .clean-modal-box{width:100%!important;max-height:88dvh!important;overflow:auto!important;border-radius:24px 24px 0 0!important;padding:24px 17px calc(20px + env(safe-area-inset-bottom))!important;animation:cleanMobileSheetIn .36s cubic-bezier(.2,.82,.2,1) both!important}
+  .clean-modal-box:before{content:"";width:42px;height:4px;border-radius:99px;background:rgba(255,255,255,.22);margin:-12px auto 5px}
+  @keyframes cleanMobileSheetIn{from{opacity:.45;transform:translateY(100%)}to{opacity:1;transform:none}}
+  .clean-modal-box input{min-height:48px!important;font-size:16px!important}
+  .clean-modal-box .btn{min-height:48px!important}
+  .lead-click-panel{z-index:1400!important;align-items:flex-end!important;padding:0!important}
+  .lead-click-panel .lead-click-sheet{width:100%!important;max-width:none!important;max-height:88dvh!important;border-radius:24px 24px 0 0!important;padding:22px 16px calc(18px + env(safe-area-inset-bottom))!important;animation:cleanMobileSheetIn .36s cubic-bezier(.2,.82,.2,1) both!important}
+  .lead-click-panel .lead-click-sheet:before{content:"";display:block;width:42px;height:4px;margin:-10px auto 12px;border-radius:99px;background:rgba(255,255,255,.22)}
+  .toast{left:14px!important;right:14px!important;bottom:calc(92px + env(safe-area-inset-bottom))!important;text-align:center!important;border-radius:14px!important}
+
+  button,.btn,a,input,select{min-touch-target-size:44px}
+  button:focus-visible,.btn:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent)!important;outline-offset:2px!important}
+  .clean-pwa-install{position:fixed;z-index:1200;left:12px;right:12px;bottom:calc(88px + env(safe-area-inset-bottom));padding:12px 12px 12px 14px;align-items:center;gap:11px;border:1px solid var(--accent-line);border-radius:18px;background:rgba(13,17,24,.94);box-shadow:0 18px 50px rgba(0,0,0,.5);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);animation:cleanInstallIn .34s ease both}
+  .clean-pwa-install.show{display:flex}
+  .clean-pwa-install i{width:36px;height:36px;display:grid;place-items:center;border-radius:11px;color:#fff;background:linear-gradient(145deg,var(--accent),color-mix(in srgb,var(--accent) 66%,black));box-shadow:0 7px 18px var(--accent-glow)}
+  .clean-pwa-install div{min-width:0;flex:1}.clean-pwa-install b{display:block;font-size:12px}.clean-pwa-install small{display:block;margin-top:2px;color:var(--muted);font-size:9px}
+  .clean-pwa-install button{border:0;border-radius:11px;padding:9px 12px;background:var(--accent);color:#fff;font-size:10px;font-weight:800}
+  .clean-pwa-install .clean-pwa-dismiss{width:28px;padding:0;background:transparent;color:var(--muted);font-size:17px}
+  @keyframes cleanInstallIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+}
+@media(max-width:380px){
+  main{padding-left:11px!important;padding-right:11px!important}
+  .rail{left:7px!important;right:7px!important}
+  .nav button span{font-size:7px!important}
+  .nav button{font-size:15px!important}
+  .metrics{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:680px) and (display-mode:standalone){
+  body{user-select:none}.command input,.query input,.settings-card input,.clean-modal input{user-select:text}
+  .clean-pwa-install{display:none!important}
+}
   </style>
 </head>
 <body>
   <aside class="rail">
     <div class="mark"><i class="fa-solid fa-code"></i></div>
     <nav class="nav">
-      <button class="active" data-view="dashboard" title="Painel"><i class="fa-solid fa-house"></i><span>Painel</span></button>
-      <button data-view="finder" title="Encontrar clientes"><i class="fa-solid fa-bullseye"></i><span>Encontrar clientes</span></button>
-      <button data-view="leads" title="Leads"><i class="fa-solid fa-users"></i><span>Leads</span></button>
-      <button data-view="pipeline" title="Pipeline"><i class="fa-solid fa-layer-group"></i><span>Pipeline</span></button>
-      <button data-view="finance" title="Financeiro"><i class="fa-solid fa-chart-line"></i><span>Financeiro</span></button>
+      <button class="active" data-view="dashboard" title="Painel"><i class="fa-solid fa-house"></i><span data-mobile-label="Início">Painel</span></button>
+      <button data-view="finder" title="Encontrar clientes"><i class="fa-solid fa-bullseye"></i><span data-mobile-label="Buscar">Encontrar clientes</span></button>
+      <button data-view="leads" title="Leads"><i class="fa-solid fa-users"></i><span data-mobile-label="Leads">Leads</span></button>
+      <button data-view="pipeline" title="Pipeline"><i class="fa-solid fa-layer-group"></i><span data-mobile-label="Pipeline">Pipeline</span></button>
+      <button data-view="finance" title="Financeiro"><i class="fa-solid fa-chart-line"></i><span data-mobile-label="Vendas">Financeiro</span></button>
     </nav>
     <div class="rail-bottom"><button class="btn" style="padding:10px" title="Configurações" onclick="go('settings')"><i class="fa-solid fa-gear"></i></button></div>
   </aside>
@@ -718,5 +845,41 @@ window.cleanLoaderSound=()=>{};window.clearSavedLeads=()=>{if(!confirm('Apagar t
 #cleanFinanceModal.open .clean-modal-box{animation:financePanelIn .32s cubic-bezier(.22,.8,.22,1) both}
 @keyframes financePanelIn{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
 </style>
+<style id="vivid-palette-and-silver-bars">
+#dashboard .month-bars div:nth-child(3n+1) i{background:linear-gradient(125deg,#f6f9ff 0%,#b8c3d0 25%,#6b7787 58%,#35404e 100%)!important;box-shadow:inset 0 2px 3px #fff9,inset 2px 0 14px #dce6f533,0 0 16px #aebdce33!important}
+#dashboard .month-bars div:nth-child(3n+2) i{background:linear-gradient(135deg,#ffffff 0%,#dce4ee 30%,#9ba8b8 62%,#536171 100%)!important;box-shadow:inset 0 2px 3px #fff9,inset 2px 0 14px #eff6ff44,0 0 16px #c6d5e644!important}
+#dashboard .month-bars div:nth-child(3n) i{background:linear-gradient(125deg,#e8eef6 0%,#aebbc9 34%,#748292 68%,#424e5d 100%)!important;box-shadow:inset 0 2px 3px #fff9,inset 2px 0 14px #d9e5f433,0 0 16px #adbdcf33!important}
+#dashboard .month-bars i:before{background:linear-gradient(120deg,#ffffff40,transparent 38%),repeating-linear-gradient(90deg,#ffffff14 0 1px,transparent 1px 4px)!important}
+</style>
+<div id="cleanPwaInstall" class="clean-pwa-install" role="dialog" aria-label="Instalar CLEAN Leads">
+  <i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i>
+  <div><b>Leve o CLEAN Leads com você</b><small>Instale como aplicativo no celular</small></div>
+  <button id="cleanPwaInstallButton" type="button">Instalar</button>
+  <button id="cleanPwaDismiss" class="clean-pwa-dismiss" type="button" aria-label="Fechar">×</button>
+</div>
+<script id="clean-pwa-mobile-runtime">
+(()=>{
+  let installPrompt=null;
+  const panel=document.getElementById('cleanPwaInstall');
+  const install=document.getElementById('cleanPwaInstallButton');
+  const dismiss=document.getElementById('cleanPwaDismiss');
+  const mobile=()=>matchMedia('(max-width:680px)').matches;
+  const standalone=()=>matchMedia('(display-mode:standalone)').matches||navigator.standalone===true;
+  const show=()=>{if(mobile()&&!standalone()&&installPrompt&&sessionStorage.getItem('clean-pwa-dismissed')!=='1')panel?.classList.add('show')};
+  window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;show()});
+  install?.addEventListener('click',async()=>{if(!installPrompt)return;panel.classList.remove('show');installPrompt.prompt();await installPrompt.userChoice;installPrompt=null});
+  dismiss?.addEventListener('click',()=>{panel.classList.remove('show');sessionStorage.setItem('clean-pwa-dismissed','1')});
+  window.addEventListener('appinstalled',()=>{installPrompt=null;panel?.classList.remove('show')});
+  if('serviceWorker' in navigator&&location.protocol!=='file:')window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(()=>{}));
+  const openShortcut=()=>{const view=location.hash.slice(1);if(['dashboard','finder','leads','pipeline','finance','settings'].includes(view)&&typeof window.go==='function')setTimeout(()=>window.go(view),80)};
+  window.addEventListener('hashchange',openShortcut);openShortcut();
+  document.addEventListener('click',event=>{
+    if(!mobile())return;
+    const target=event.target.closest('button,.btn,.lead-card,.deal,.lead-row-click');
+    if(!target)return;
+    target.animate?.([{transform:'scale(1)'},{transform:'scale(.97)'},{transform:'scale(1)'}],{duration:190,easing:'ease-out'});
+  },{passive:true});
+})();
+</script>
 </body>
 </html>

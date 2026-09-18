@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="CLEAN Leads">
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="icon" type="image/svg+xml" href="./icon-192.svg">
+  <link rel="icon" type="image/svg+xml" href="./icon-a192.svg">
   <link rel="apple-touch-icon" href="./icon-192.svg">
   <title>CLEAN Leads — Inteligência comercial</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -953,6 +953,25 @@ body.wallet-open .app{touch-action:none}.wallet-mode.wallet-drawer{overscroll-be
 #finder .finder-shell .query #searchVolume{display:none!important}.settings-local-actions{display:grid!important;grid-template-columns:1fr 1fr!important}.settings-local-actions .btn.primary{grid-column:1/-1!important}
 }
 </style>
+<style id="clean-cakto-style">
+.cakto-card{position:relative;overflow:hidden}.cakto-card:after{content:"C";position:absolute;right:-8px;bottom:-42px;font:900 155px Manrope;color:color-mix(in srgb,var(--accent) 9%,transparent);pointer-events:none}.cakto-status{display:flex;align-items:center;gap:9px;margin:16px 0 12px;padding:11px;border:1px solid var(--line);border-radius:11px;background:#0002;font-size:11px}.cakto-status i{color:var(--accent)}.cakto-actions{display:flex;gap:8px;position:relative;z-index:1}.cakto-actions .btn{flex:1}.cakto-url{width:100%;margin-top:10px;padding:11px;border:1px solid var(--line);border-radius:9px;background:#080b11;color:#fff;font-size:10px;outline:none}.cakto-url:focus{border-color:var(--accent)}.cakto-checkout-button{background:linear-gradient(135deg,var(--accent2),var(--accent))!important;border-color:transparent!important}
+.cakto-connect-fields{display:grid;gap:8px;margin-top:13px}.cakto-connect-fields input{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;background:#080b11;color:#fff;font-size:10px;outline:none}.cakto-connect-fields input:focus{border-color:var(--accent)}.cakto-connect-fields small{color:var(--muted);font-size:9px;line-height:1.5}.cakto-api-details{position:relative;z-index:1;margin-top:10px}.cakto-api-details summary{cursor:pointer;color:var(--muted);font-size:9px}
+@media(max-width:680px){.cakto-actions{display:grid;grid-template-columns:1fr 1fr}.cakto-actions .cakto-save{grid-column:1/-1}}
+</style>
+<script id="clean-cakto-runtime">
+(()=>{
+const CONNECTION='clean-cakto-connection',API_URL='clean-cakto-api-url';
+const connection=()=>localStorage.getItem(CONNECTION)||'';
+const endpoint=()=>{const custom=String(localStorage.getItem(API_URL)||'').trim().replace(/\/$/,'');if(custom)return custom+'/api/cakto';return location.protocol==='file:'?'':location.origin+'/api/cakto'};
+const call=async body=>{if(!endpoint())throw Error('Publique o Clean Leads na Vercel para conectar a Cakto');const response=await fetch(endpoint(),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)}),data=await response.json().catch(()=>({}));if(!response.ok)throw Error(data.error||'Não foi possível comunicar com a Cakto');return data};
+const settings=document.querySelector('#settings .settings-layout');let status,fields,connectButton,disconnectButton,apiInput;
+const paint=()=>{if(!status)return;const connected=!!connection();status.innerHTML=connected?'<i class="fa-solid fa-circle-check"></i><span>Conta Cakto conectada · checkout automático ativo</span>':'<i class="fa-solid fa-circle-info"></i><span>Conecte sua conta uma única vez</span>';fields.hidden=connected;connectButton.hidden=connected;disconnectButton.hidden=!connected};
+if(settings){const card=document.createElement('article');card.className='card settings-card cakto-card';card.innerHTML='<div class="settings-card-head"><div class="settings-icon"><i class="fa-solid fa-seedling"></i></div><div><h2 class="card-title">Cakto</h2><p class="card-caption">Crie checkouts com valor editável dentro do Clean Leads.</p></div></div><div class="cakto-status"></div><div class="cakto-connect-fields"><input class="cakto-client-id" autocomplete="off" placeholder="Client ID da Cakto"><input class="cakto-client-secret" type="password" autocomplete="new-password" placeholder="Client Secret da Cakto"><small>As credenciais são enviadas ao servidor seguro e não ficam salvas diretamente neste dispositivo.</small></div><div class="cakto-actions"><button type="button" class="btn primary cakto-save"><i class="fa-solid fa-link"></i>Conectar conta Cakto</button><button type="button" class="btn cakto-remove" hidden><i class="fa-solid fa-link-slash"></i>Desconectar</button></div><details class="cakto-api-details"><summary>Servidor da integração</summary><input class="cakto-url" aria-label="URL do servidor Clean Leads" inputmode="url" placeholder="Automático na Vercel"></details>';const integration=settings.querySelector('.settings-integrations');integration?.after(card);status=card.querySelector('.cakto-status');fields=card.querySelector('.cakto-connect-fields');connectButton=card.querySelector('.cakto-save');disconnectButton=card.querySelector('.cakto-remove');apiInput=card.querySelector('.cakto-url');apiInput.value=localStorage.getItem(API_URL)||'';apiInput.onchange=()=>localStorage.setItem(API_URL,apiInput.value.trim().replace(/\/$/,''));connectButton.onclick=async()=>{const clientId=card.querySelector('.cakto-client-id').value.trim(),clientSecret=card.querySelector('.cakto-client-secret').value.trim();if(!clientId||!clientSecret)return window.toast?.('Informe o Client ID e o Client Secret da Cakto');connectButton.disabled=true;connectButton.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i>Conectando';try{const data=await call({action:'connect',clientId,clientSecret});localStorage.setItem(CONNECTION,data.connection);card.querySelector('.cakto-client-secret').value='';paint();window.toast?.('Conta Cakto conectada com segurança')}catch(error){window.toast?.(error.message)}finally{connectButton.disabled=false;connectButton.innerHTML='<i class="fa-solid fa-link"></i>Conectar conta Cakto'}};disconnectButton.onclick=()=>{localStorage.removeItem(CONNECTION);paint();window.toast?.('Conta Cakto desconectada')};paint()}
+const form=document.getElementById('checkoutForm');if(form&&!form.querySelector('.cakto-checkout-button')){const button=document.createElement('button');button.type='button';button.className='btn cakto-checkout-button';button.innerHTML='<i class="fa-solid fa-wand-magic-sparkles"></i>Gerar checkout pela Cakto';button.onclick=async()=>{if(!connection()){window.closeFinanceModal?.();window.go?.('settings');return window.toast?.('Conecte sua conta Cakto primeiro')}const value=Number(String(document.getElementById('checkoutValue')?.value||'').replace(/\./g,'').replace(',','.')),client=document.getElementById('checkoutClient')?.value.trim(),description=document.getElementById('checkoutDescription')?.value.trim();if(!Number.isFinite(value)||value<=0)return window.toast?.('Informe um valor válido');button.disabled=true;const old=button.innerHTML;button.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i>Criando checkout';try{const data=await call({action:'checkout',connection:connection(),value,client,description,salesPage:location.protocol==='file:'?'https://cleanleads.app':location.origin});document.getElementById('checkoutForm').style.display='none';document.getElementById('checkoutResult').style.display='grid';document.getElementById('checkoutResultText').textContent=(client||'Cliente')+' · R$ '+value.toLocaleString('pt-BR',{minimumFractionDigits:2});document.getElementById('checkoutLink').value=data.url;window.toast?.('Checkout Cakto criado automaticamente')}catch(error){window.toast?.(error.message)}finally{button.disabled=false;button.innerHTML=old}};form.querySelector('.btn.primary')?.after(button)}
+localStorage.removeItem('clean-stripe-connection');localStorage.removeItem('clean-stripe-api-url');
+localStorage.removeItem('clean-cakto-checkout-url');
+})();
+</script>
 <div id="cleanPwaInstall" class="clean-pwa-install" role="dialog" aria-label="Instalar CLEAN Leads">
   <i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i>
   <div><b>Leve o CLEAN Leads com você</b><small>Instale como aplicativo no celular</small></div>
@@ -981,6 +1000,68 @@ body.wallet-open .app{touch-action:none}.wallet-mode.wallet-drawer{overscroll-be
     if(!target)return;
     target.animate?.([{transform:'scale(1)'},{transform:'scale(.97)'},{transform:'scale(1)'}],{duration:190,easing:'ease-out'});
   },{passive:true});
+})();
+</script>
+<script id="clean-max-search-runtime">
+(()=>{
+  const RESULT='clean-leads-last-search',CONFIG='kaptar-config',sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+  const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key)||'null')??fallback}catch(_){return fallback}};
+  const write=(key,value)=>localStorage.setItem(key,JSON.stringify(value));
+  const fold=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+  const blockedDomains=[
+    'instagram.com','facebook.com','fb.com','m.me','threads.net','twitter.com','x.com','tiktok.com','youtube.com','youtu.be','linkedin.com','pinterest.com','snapchat.com',
+    'whatsapp.com','wa.me','api.whatsapp.com','t.me','telegram.me','discord.com','discord.gg','linktr.ee','beacons.ai','bio.site','campsite.bio','solo.to','taplink.cc',
+    'google.com','google.com.br','g.page','goo.gl','maps.app.goo.gl','business.site','googleusercontent.com','ifood.com.br','rappi.com.br','ubereats.com','tripadvisor.com',
+    'booking.com','getninjas.com.br','guiamais.com.br','apontador.com.br','yelp.com','foursquare.com','catalogo.med.br','doctoralia.com.br','olx.com.br','mercadolivre.com.br'
+  ];
+  function siteType(value){
+    const raw=String(value||'').trim();if(!raw)return'missing';
+    try{const url=new URL(/^https?:\/\//i.test(raw)?raw:'https://'+raw),host=url.hostname.toLowerCase().replace(/^www\./,'');if(blockedDomains.some(domain=>host===domain||host.endsWith('.'+domain)))return'third-party';if(host.startsWith('maps.')||host.includes('.google.')||url.pathname.toLowerCase().startsWith('/maps'))return'third-party';return'official'}catch(_){return'missing'}
+  }
+  function splitQuery(raw){const match=String(raw).trim().match(/^(.+?)\s+(?:em|no|na|nos|nas)\s+(.+)$/i);return match?{segment:match[1].trim(),place:match[2].trim()}:{segment:String(raw).trim(),place:'Brasil'}}
+  function queryVariants(raw){
+    const {segment,place}=splitQuery(raw),normalized=fold(segment),terms=[segment];
+    const groups=[
+      [/estetic.*autom|detalh.*autom|car detail/,['estética automotiva','detalhamento automotivo','car detail','polimento automotivo','higienização automotiva','lava rápido premium','vitrificação automotiva','lavagem automotiva detalhada']],
+      [/hamburg|burger/,['hamburgueria','hamburgueria artesanal','lanchonete','burger']],
+      [/pizz/,['pizzaria','pizzaria artesanal','delivery de pizza']],
+      [/barbear|barber/,['barbearia','barber shop','cabeleireiro masculino']],
+      [/salao|cabeleir|beleza/,['salão de beleza','cabeleireiro','espaço de beleza','estúdio de beleza']],
+      [/clinica|consultorio/,['clínica','consultório','centro especializado']],
+      [/restaurante|comida/,['restaurante','bistrô','cozinha artesanal']],
+      [/academia|fitness/,['academia','centro de treinamento','estúdio fitness']],
+      [/pet shop|veterinar/,['pet shop','clínica veterinária','banho e tosa']],
+      [/dent|odont/,['dentista','clínica odontológica','consultório odontológico']]
+    ];
+    groups.forEach(([pattern,synonyms])=>{if(pattern.test(normalized))terms.push(...synonyms)});
+    terms.push(`${segment} serviço`,`${segment} profissional`,`${segment} empresa`,`${segment} perto de mim`);
+    const variants=[];[...new Set(terms.map(item=>item.trim()).filter(Boolean))].forEach(term=>{variants.push(`${term} em ${place}`);variants.push(`${term} ${place}`)});
+    return [...new Set(variants.map(item=>item.replace(/\s+/g,' ').trim()))].slice(0,16);
+  }
+  function leadFrom(place){
+    const original=place.websiteUri||'',kind=siteType(original),name=place.displayName?.text||'Empresa',address=place.formattedAddress||'';
+    return{id:place.id||`g_${fold(name+'|'+address).replace(/[^a-z0-9]/g,'_')}`,nome:name,endereco:address,telefone:place.nationalPhoneNumber||place.internationalPhoneNumber||'',site:kind==='official'?original:'',redeSocial:kind==='third-party'?original:'',maps:place.googleMapsUri||'',categoria:place.primaryType||'',origem:'Google Maps',status:'novo',capturadoEm:new Date().toISOString()}
+  }
+  async function page(key,text,pageToken){
+    const payload={textQuery:text,languageCode:'pt-BR',regionCode:'BR',pageSize:20};if(pageToken)payload.pageToken=pageToken;
+    const response=await fetch('https://places.googleapis.com/v1/places:searchText',{method:'POST',headers:{'Content-Type':'application/json','X-Goog-Api-Key':key,'X-Goog-FieldMask':'places.id,places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.internationalPhoneNumber,places.websiteUri,places.googleMapsUri,places.primaryType,places.businessStatus,nextPageToken'},body:JSON.stringify(payload)});
+    const data=await response.json();if(!response.ok)throw Error(data.error?.message||'Falha ao consultar o Google Maps');return data
+  }
+  async function collectQuery(key,text,onPage){
+    let token='';for(let current=0;current<3;current++){if(current&&token)await sleep(2100);const data=await page(key,text,token);onPage(data.places||[]);token=data.nextPageToken||'';if(!token)break}
+  }
+  const select=document.getElementById('searchVolume');if(select)select.innerHTML='<option value="100">Até 100 leads</option><option value="200">Até 200 leads</option><option value="300" selected>Busca máxima · até 300</option>';
+  window.searchLeads=async()=>{
+    const config=read(CONFIG,{}),key=config.google_maps_api_key||config.googleMapsApiKey,input=document.getElementById('segment'),wanted=Math.min(Math.max(Number(select?.value||300),20),300),button=document.querySelector('#finder .query .btn'),loader=document.getElementById('leadLoader');
+    if(!key){window.toast?.('Adicione a Google Maps API Key em Configurações');window.go?.('settings');return}if(!input?.value.trim()){window.toast?.('Digite o segmento e a cidade que deseja buscar');return}
+    const queries=queryVariants(input.value),found=new Map(),old=button?.innerHTML,progress=document.getElementById('loaderProgress');let finished=0;
+    if(button){button.disabled=true;button.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Buscando'}loader?.classList.add('show');
+    const add=places=>{places.forEach(place=>{if(place.businessStatus&&place.businessStatus!=='OPERATIONAL')return;const lead=leadFrom(place);if(!lead.site){const key=place.id||fold(lead.nome+'|'+lead.endereco);if(!found.has(key))found.set(key,lead)}})};
+    try{
+      let cursor=0;const workers=Array.from({length:3},async()=>{while(cursor<queries.length&&found.size<wanted){const index=cursor++,query=queries[index];try{await collectQuery(key,query,add)}catch(error){if(!found.size&&index===queries.length-1)throw error}finally{finished++;if(progress)progress.style.width=Math.min(96,Math.round(finished/queries.length*96))+'%'}}});
+      await Promise.all(workers);const leads=[...found.values()].slice(0,wanted);window.__searchResults=leads;write(RESULT,leads);if(progress)progress.style.width='100%';window.renderCanonicalLeads?.(leads);window.go?.('leads');window.toast?.(leads.length?`${leads.length} empresas sem site encontradas`:'Nenhuma empresa sem site apareceu; tente informar também a cidade')
+    }catch(error){window.toast?.(error.message||'Não foi possível concluir a busca')}finally{setTimeout(()=>loader?.classList.remove('show'),500);if(button){button.disabled=false;button.innerHTML=old}}
+  };
 })();
 </script>
 </body>

@@ -304,6 +304,7 @@ body:has(.lead-click-panel.open){overflow:hidden!important} .lead-click-panel{ov
       <button data-view="leads" title="Leads"><i class="fa-solid fa-users"></i><span data-mobile-label="Leads">Leads</span></button>
       <button data-view="pipeline" title="Pipeline"><i class="fa-solid fa-layer-group"></i><span data-mobile-label="Pipeline">Pipeline</span></button>
       <button data-view="finance" title="Financeiro"><i class="fa-solid fa-chart-line"></i><span data-mobile-label="Vendas">Financeiro</span></button>
+      <button class="mobile-settings-nav" data-view="settings" title="Configurações" onclick="go('settings')"><i class="fa-solid fa-gear"></i><span data-mobile-label="Ajustes">Configurações</span></button>
     </nav>
     <div class="rail-bottom"><button class="btn" style="padding:10px" title="Configurações" onclick="go('settings')"><i class="fa-solid fa-gear"></i></button></div>
   </aside>
@@ -851,6 +852,80 @@ window.cleanLoaderSound=()=>{};window.clearSavedLeads=()=>{if(!confirm('Apagar t
 #dashboard .month-bars div:nth-child(3n) i{background:linear-gradient(125deg,#e8eef6 0%,#aebbc9 34%,#748292 68%,#424e5d 100%)!important;box-shadow:inset 0 2px 3px #fff9,inset 2px 0 14px #d9e5f433,0 0 16px #adbdcf33!important}
 #dashboard .month-bars i:before{background:linear-gradient(120deg,#ffffff40,transparent 38%),repeating-linear-gradient(90deg,#ffffff14 0 1px,transparent 1px 4px)!important}
 </style>
+<style id="clean-search-theme-mobile-fixes">
+/* Busca estabilizada: uma única superfície, sem quadrados ou regras concorrentes. */
+.finder-shell .query{display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;align-items:center!important;gap:12px!important;min-height:64px!important;height:auto!important;padding:8px 9px 8px 17px!important;overflow:visible!important;isolation:isolate!important}
+.finder-shell .query>i{flex:none!important;margin:0!important}
+.finder-shell .query input#segment{display:block!important;width:100%!important;min-width:0!important;height:46px!important;margin:0!important;padding:0 4px!important;border:0!important;border-radius:0!important;outline:0!important;background:transparent!important;box-shadow:none!important;color:var(--text)!important;font:700 16px/1.2 Manrope,Arial,sans-serif!important;appearance:none!important;-webkit-appearance:none!important;caret-color:var(--accent)!important}
+.finder-shell .query input#segment:focus{border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important}
+.finder-shell .query:focus-within{border-color:var(--accent)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent),0 14px 38px rgba(0,0,0,.2)!important}
+.finder-shell .query #searchVolume{width:132px!important;min-width:132px!important;height:43px!important;margin:0!important;padding:0 10px!important;border:1px solid var(--line)!important;border-radius:11px!important;background:#121722!important;color:var(--text)!important;box-shadow:none!important;font:650 11px Manrope,Arial,sans-serif!important}
+.finder-shell .query .btn{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;width:auto!important;min-width:126px!important;height:46px!important;margin:0!important;padding:0 15px!important;border-radius:12px!important;font:800 11px/1 Manrope,Arial,sans-serif!important;white-space:nowrap!important}
+.finder-shell .query .btn:before{content:none!important}
+.finder-shell .query .btn i{display:inline-block!important;margin:0!important;font-size:13px!important}
+.finder-shell .query .btn:disabled{opacity:.72!important;cursor:wait!important}
+.mobile-settings-nav{display:none!important}
+
+/* A barra central acompanha a cor escolhida; as laterais permanecem prata. */
+#dashboard .month-bars div:nth-child(3n+1) i{background:linear-gradient(125deg,#f4f7fb 0%,#aeb9c6 30%,#667382 65%,#303a47 100%)!important;border-color:#bec9d5!important}
+#dashboard .month-bars div:nth-child(3n+2) i{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 28%,white),var(--accent) 46%,color-mix(in srgb,var(--accent) 72%,black))!important;border-color:color-mix(in srgb,var(--accent) 52%,white)!important;box-shadow:inset 0 2px 3px rgba(255,255,255,.58),inset 2px 0 14px color-mix(in srgb,var(--accent) 24%,transparent),0 0 28px color-mix(in srgb,var(--accent) 42%,transparent)!important}
+#dashboard .month-bars div:nth-child(3n) i{background:linear-gradient(125deg,#dce3eb 0%,#96a3b2 35%,#596676 70%,#2d3743 100%)!important;border-color:#aab6c4!important}
+.settings-theme-card{grid-column:1/-1!important}.settings-theme-swatches{display:flex;flex-wrap:wrap;gap:11px;margin-top:17px}.settings-theme-swatch{position:relative;width:46px;height:46px;border:2px solid transparent;border-radius:14px;cursor:pointer;background:var(--swatch);box-shadow:inset 0 1px 0 rgba(255,255,255,.42),0 8px 18px color-mix(in srgb,var(--swatch) 32%,transparent);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}.settings-theme-swatch:hover{transform:translateY(-2px)}.settings-theme-swatch.active{border-color:#fff;box-shadow:0 0 0 3px var(--swatch),0 8px 25px color-mix(in srgb,var(--swatch) 55%,transparent)}.settings-theme-swatch.active:after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-weight:900;text-shadow:0 1px 5px #000}
+
+@media(max-width:680px){
+  .nav{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:2px!important}
+  .mobile-settings-nav{display:flex!important}
+  .rail-bottom{display:none!important}
+  .nav button{padding-left:1px!important;padding-right:1px!important}
+  .nav button span:after{font-size:7px!important}
+  .finder-shell .query{grid-template-columns:auto minmax(0,1fr) 82px!important;gap:8px!important;min-height:60px!important;padding:7px 7px 7px 12px!important}
+  .finder-shell .query input#segment{height:44px!important;padding:0!important;font-size:16px!important}
+  .finder-shell .query #searchVolume{display:none!important}
+  .finder-shell .query .btn{min-width:82px!important;width:82px!important;height:44px!important;padding:0 9px!important;font-size:10px!important;border-radius:12px!important}
+  .finder-shell .query .btn i{font-size:12px!important}
+  .settings-theme-swatches{justify-content:space-between}.settings-theme-swatch{width:44px;height:44px}
+  body:has(#finance.active){padding-top:0!important}
+  main:has(#finance.active){padding-top:0!important;margin-top:0!important}
+  #finance.active,#finance .finance-stage-card{margin-top:0!important;border-top:0!important}
+  #finance .finance-stage-head{padding-top:calc(20px + env(safe-area-inset-top))!important}
+}
+</style>
+<script id="clean-stable-search-theme-runtime">
+(()=>{
+  if(typeof window.toast!=='function')window.toast=message=>{
+    const element=document.getElementById('toast');
+    if(!element)return;
+    const label=element.querySelector('span');if(label)label.textContent=String(message||'');
+    element.classList.add('show');clearTimeout(window.__toast);
+    window.__toast=setTimeout(()=>element.classList.remove('show'),2800);
+  };
+  const root=document.documentElement,KEY='clean-leads-accent';
+  const colors=['#4da3ff','#8b5cf6','#20c985','#ff594d','#ff9f1c'];
+  const applyColor=(color,notify=false)=>{
+    if(!/^#[0-9a-f]{6}$/i.test(color))return;
+    const value=parseInt(color.slice(1),16),rgb=[(value>>16)&255,(value>>8)&255,value&255].join(',');
+    root.style.setProperty('--accent',color);root.style.setProperty('--accent-rgb',rgb);
+    root.style.setProperty('--accent2',`color-mix(in srgb,${color} 72%,white)`);
+    root.style.setProperty('--accent-soft',`color-mix(in srgb,${color} 22%,transparent)`);
+    root.style.setProperty('--accent-line',`color-mix(in srgb,${color} 50%,transparent)`);
+    root.style.setProperty('--accent-glow',`color-mix(in srgb,${color} 48%,transparent)`);
+    try{localStorage.setItem(KEY,color)}catch(_){}
+    document.querySelectorAll('[data-color],[data-theme-color]').forEach(button=>button.classList.toggle('active',(button.dataset.color||button.dataset.themeColor)===color));
+    if(notify)window.toast?.('Cor da interface atualizada');
+  };
+  window.setCleanAccent=applyColor;
+  const layout=document.querySelector('#settings .settings-layout');
+  if(layout&&!layout.querySelector('.settings-theme-card')){
+    const card=document.createElement('article');card.className='card settings-card settings-theme-card';
+    card.innerHTML='<div class="settings-card-head"><div class="settings-icon"><i class="fa-solid fa-palette"></i></div><div><h2 class="card-title">Cor da interface</h2><p class="card-caption">Escolha uma cor mais viva para todo o sistema.</p></div></div><div class="settings-theme-swatches" aria-label="Cores da interface">'+colors.map((color,index)=>'<button type="button" class="settings-theme-swatch" style="--swatch:'+color+'" data-theme-color="'+color+'" aria-label="Cor '+(index+1)+'"></button>').join('')+'</div>';
+    layout.prepend(card);
+  }
+  document.addEventListener('click',event=>{const swatch=event.target.closest?.('[data-theme-color]');if(swatch)applyColor(swatch.dataset.themeColor,true)});
+  const input=document.getElementById('segment');
+  input?.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();if(!document.querySelector('#finder .query .btn:disabled'))window.searchLeads?.()}});
+  let saved='';try{saved=localStorage.getItem(KEY)||''}catch(_){}applyColor(colors.includes(saved)?saved:colors[0]);
+})();
+</script>
 <div id="cleanPwaInstall" class="clean-pwa-install" role="dialog" aria-label="Instalar CLEAN Leads">
   <i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i>
   <div><b>Leve o CLEAN Leads com você</b><small>Instale como aplicativo no celular</small></div>
